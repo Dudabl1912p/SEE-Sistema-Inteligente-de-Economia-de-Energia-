@@ -4,22 +4,6 @@
              Matheus Nassif Salles Campolina
              Samuel Henrique de Souza Nogueira
     Data: 09/06/2026
-    
-    Alterações (gamificação + confirmação via Serial + sem LCD):
-    - O botão de confirmação (buttonConfirm) foi removido. A autorização
-      das ações de economia agora é feita digitando 'S' no Monitor Serial.
-    - O display LCD foi removido. Todas as mensagens que antes iam para
-      o LCD agora são impressas via Serial.print/println.
-    - A mensagem de estado padrão ("Sistema OK, sem desperdicio") só é
-      impressa UMA VEZ quando o sistema entra nesse estado (controlado
-      pela flag atualizarMensagemPadrao), evitando spam no Serial a
-      cada iteração do loop.
-    - Sistema de pontuação: cada confirmação aceita rende 1 ponto, desde
-      que o intervalo entre uma confirmação e a anterior seja de no
-      máximo JANELA_STREAK. Se o usuário ficar mais tempo que isso sem
-      confirmar nenhuma economia, o streak de pontos é reiniciado.
-    - A cada 5 pontos (PONTOS_PARA_NIVEL) o usuário sobe de nível e uma
-      barra de progresso é exibida via Serial.
 */
 
 #include <Servo.h>
