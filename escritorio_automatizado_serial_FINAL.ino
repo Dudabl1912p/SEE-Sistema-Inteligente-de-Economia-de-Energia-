@@ -33,6 +33,13 @@ bool ultimoEstadoBotaoAC = LOW;
 int valorLDR = 0;
 int limiteDiaNoite = 600;
 
+// Filtro de Media Movel do LDR
+const byte NUM_LEITURAS_LDR = 10;
+int leiturasLDR[NUM_LEITURAS_LDR];
+byte indiceLeituraLDR = 0;
+long somaLeiturasLDR = 0;
+
+
 bool cortinaAberta = false;
 
 unsigned long ultimoTempoMovimento = 0;
@@ -83,6 +90,14 @@ void setup()
   servoAC.write(0);
   servoCortina.write(0);
 
+  for (byte i = 0; i < NUM_LEITURAS_LDR; i++)
+  {
+    leiturasLDR[i] = analogRead(LDRPin);
+    somaLeiturasLDR += leiturasLDR[i];
+  }
+
+  valorLDR = somaLeiturasLDR / NUM_LEITURAS_LDR;
+
   // Bluetooth
   // pinMode(TX, OUTPUT);
   // pinMode(RX, INPUT);
@@ -104,7 +119,7 @@ void loop()
 
   bool presenca = digitalRead(PIRPin);
 
-  valorLDR = analogRead(LDRPin);
+  valorLDR = lerLDRMediaMovel();
 
   // O potenciometro ajusta o limite de luminosidade
   limiteDiaNoite = map(
@@ -470,6 +485,29 @@ void loop()
 
 
   delay(20);
+}
+
+
+// ==========================================
+// FILTRO DE MEDIA MOVEL DO LDR
+// ==========================================
+
+int lerLDRMediaMovel()
+{
+  somaLeiturasLDR -= leiturasLDR[indiceLeituraLDR];
+
+  leiturasLDR[indiceLeituraLDR] = analogRead(LDRPin);
+
+  somaLeiturasLDR += leiturasLDR[indiceLeituraLDR];
+
+  indiceLeituraLDR++;
+
+  if (indiceLeituraLDR >= NUM_LEITURAS_LDR)
+  {
+    indiceLeituraLDR = 0;
+  }
+
+  return somaLeiturasLDR / NUM_LEITURAS_LDR;
 }
 
 
