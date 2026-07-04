@@ -54,9 +54,9 @@ https://www.tinkercad.com/things/gcGslgnGDBR-copy-of-simee?sharecode=HlKcOtBjiTT
 
 ## Estrutura do repositório
 
-.
-├── SEE.ino              # Código-fonte do projeto
-├── docs/                # Relatório técnico e imagens da montagem
+. 
+├── SEE.ino # Código-fonte do projeto 
+├── docs/ # Relatório técnico e imagens da montagem 
 └── README.md
 
 ## Como executar
